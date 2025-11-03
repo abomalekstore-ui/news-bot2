@@ -29,7 +29,18 @@ rss_feeds = [
     "https://www.albayan.ae/polopoly_fs/2.206/rss/1.316403",
     "https://www.sayidaty.net/rss.xml"
 ]
-sent_titles = set()  # لتخزين العناوين المرسلة ومنع التكرار
+
+# 📁 تحميل العناوين القديمة من ملف نصي
+if os.path.exists("sent.txt"):
+    with open("sent.txt", "r", encoding="utf-8") as f:
+        sent_titles = set(f.read().splitlines())
+else:
+    sent_titles = set()
+
+# 💾 حفظ العناوين الجديدة بعد الإرسال
+def save_sent_titles():
+    with open("sent.txt", "w", encoding="utf-8") as f:
+        f.write("\n".join(sent_titles))
 # 📰 جلب الأخبار من جميع المصادر
 def fetch_news():
     all_news = []
@@ -93,7 +104,7 @@ def send_news():
         print(f"✅ تم إرسال {new_count} خبر جديد.")
     else:
         print("ℹ️ لا توجد أخبار جديدة حالياً.")
-
+save_sent_titles()  # حفظ الأخبار المرسلة لتجنب التكرار بعد إعادة التشغيل
 # 🔁 تشغيل تلقائي كل ساعة
 def auto_send():
     send_news()  # إرسال فوري أول مرة
