@@ -1,3 +1,4 @@
 pyTelegramBotAPI
-Flask
+flask
 requests
+feedparser
