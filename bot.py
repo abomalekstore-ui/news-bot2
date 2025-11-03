@@ -103,7 +103,7 @@ def auto_send():
         print("⏳ في انتظار الساعة القادمة...")
         time.sleep(3600)
 
-# 🌐 Flask لإبقاء السيرفر شغال
+# 🌐 إبقاء السيرفر شغال Flask
 app = Flask(__name__)
 
 @app.route('/')
@@ -111,10 +111,10 @@ def home():
     return """
     <html>
     <head><title>بوت الأخبار العربي</title></head>
-    <body style="font-family:Arial; text-align:center; direction:rtl; margin-top:60px;">
+    <body style="font-family:Arial; text-align:center; direction:rtl;">
         <h2>✅ البوت شغال تمام</h2>
-        <p>🗞️ يجلب الأخبار العربية تلقائياً من أكبر المصادر كل ساعة.</p>
-        <a href='https://t.me/AkhbarLast' target='_blank'>📢 قناة الأخبار</a>
+        <p>📡 يجلب الأخبار العربية تلقائيًا من أكبر المصادر كل ساعة.</p>
+        <a href='https://t.me/AkhbarLast' target='_blank'>انضم لقناة الأخبار</a>
     </body>
     </html>
     """
