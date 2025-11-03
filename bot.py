@@ -99,9 +99,10 @@ def send_news():
             sent_titles.add(n["title"])
             new_count += 1
             time.sleep(3)
-        except Exception as e:
-            print("⚠️ خطأ أثناء الإرسال:", e)
-        if new_count > 0:
+except Exception as e:
+        print("⚠️ خطأ أثناء الإرسال:", e)
+
+    if new_count > 0:
         print(f"✅ تم إرسال {new_count} خبر جديد.")
     else:
         print("🟤 لا توجد أخبار جديدة حالياً.")
@@ -132,8 +133,12 @@ def home():
     </html>
     """
 
-def run():
-    app.run(host='0.0.0.0', port=8080)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8000))
 
-Thread(target=run).start()
-Thread(target=auto_send).start()
+    print("🚀 البوت شغال تمام على المنفذ", port)
+
+    # تشغيل المهام في خيوط منفصلة
+    Thread(target=auto_send).start()
+    Thread(target=lambda: app.run(host="0.0.0.0", port=port)).start()
