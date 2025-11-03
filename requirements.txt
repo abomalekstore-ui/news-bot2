@@ -1,5 +1,3 @@
 pyTelegramBotAPI
 Flask
 requests
-beautifulsoup4
-feedparser
