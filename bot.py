@@ -120,7 +120,7 @@ def auto_send():
         print("⏳ في انتظار الساعة القادمة...")
         time.sleep(3600)
 
-# 🌐 Flask
+# 🌐 Flask لإبقاء السيرفر شغال
 app = Flask(__name__)
 
 @app.route('/')
@@ -129,3 +129,20 @@ def home():
     <html>
     <head><title>بوت الأخبار العربي</title></head>
     <body style="font-family:Arial; text-align:center; direction:rtl;">
+        <h2>✅ البوت شغال تمام</h2>
+        <p>📡 يجلب الأخبار العربية تلقائيًا من أكبر المصادر كل ساعة.</p>
+        <a href='https://t.me/AkhbarLast' target='_blank'>انضم لقناة الأخبار</a>
+    </body>
+    </html>
+    """
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    print("🚀 البوت شغال تمام على المنفذ", port)
+
+    Thread(target=auto_send).start()
+    Thread(target=lambda: app.run(host="0.0.0.0", port=port)).start()
+
+    # 👇 دول يخلوه يفضل شغال في Koyeb
+    while True:
+        time.sleep(60)
