@@ -29,7 +29,7 @@ rss_feeds = [
     "https://www.albayan.ae/polopoly_fs/2.206/rss/1.316403",
     "https://www.sayidaty.net/rss.xml"
 ]
-
+sent_titles = set()  # لتخزين العناوين المرسلة ومنع التكرار
 # 📰 جلب الأخبار من جميع المصادر
 def fetch_news():
     all_news = []
