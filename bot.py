@@ -1,5 +1,8 @@
 import telebot
 import feedparser
+import sys
+import types
+sys.modules["cgi"] = types.ModuleType("cgi")
 import time
 import os
 from flask import Flask
