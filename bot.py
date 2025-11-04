@@ -1,10 +1,18 @@
 import sys
 import types
+import os
 import time
 import requests
 import telebot
 from flask import Flask
 import threading
+
+# إصلاح cgi المفقودة مع Python 3.13
+cgi = types.ModuleType("cgi")
+cgi.escape = lambda s, quote=True: s
+sys.modules["cgi"] = cgi
+
+import feedparser
 
 # 🧰 إصلاح مشكلة cgi المفقودة في Python 3.13
 cgi = types.ModuleType("cgi")
