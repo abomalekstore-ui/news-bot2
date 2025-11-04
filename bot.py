@@ -146,10 +146,10 @@ def auto_send():
         print("⏳ في انتظار الساعة القادمة...")
         time.sleep(3600)
 
-# 🌍 Flask لتشغيل السيرفر على Render
+# Flask لتشغيل السيرفر على Render
 from flask import Flask
 from threading import Thread
-import os, time
+import os, time, requests
 
 app = Flask(__name__)
 
@@ -161,18 +161,12 @@ def home():
     <body style="font-family:Arial; text-align:center;">
         <h2>✅ البوت شغال تمام</h2>
         <p>📢 يجلب الأخبار العربية تلقائيًا من أكبر المصادر كل ساعة.</p>
-        <a href='https://t.me/AkhbarLast' target='_blank'>📲 تابع القناة</a>
+        <a href='https://t.me/AkhbarLast' target='_blank'>📢 تابع القناة</a>
     </body>
     </html>
     """
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    print(f"🚀 البوت شغال تمام على المنفذ {port}")
-    Thread(target=auto_send, daemon=True).start()
-    app.run(host="0.0.0.0", port=port)
-
-# 💤 منع السيرفر من الدخول في وضع النوم (Koyeb)
+# 💤 منع السيرفر من الدخول في وضع النوم (Render)
 def stay_awake():
     while True:
         try:
@@ -180,9 +174,9 @@ def stay_awake():
             print("✅ Ping sent to keep server awake.")
         except Exception as e:
             print(f"⚠️ خطأ أثناء محاولة إبقاء السيرفر مستيقظًا: {e}")
-        time.sleep(240)  # كل 4 دقايق (240 ثانية)
+        time.sleep(240)  # كل 4 دقائق
 
-# تشغيل الكود في ثريد منفصل
+# 🚀 التشغيل الرئيسي
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     print(f"🚀 البوت شغال تمام على المنفذ {port}")
