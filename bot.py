@@ -1,24 +1,20 @@
+# ✅ استيراد المكتبات المطلوبة
 import sys
 import types
-import os
 import time
 import requests
 import telebot
 from flask import Flask
 import threading
 
-# إصلاح cgi المفقودة مع Python 3.13
+# 🩹 إصلاح مكتبة cgi المفقودة في Python 3.13
+# مكتبة feedparser القديمة بتعتمد على دالة parse_header من cgi
+# فبنعمل موديول وهمي بنفس الاسم علشان الكود ما يبوظش
 cgi = types.ModuleType("cgi")
-cgi.escape = lambda s, quote=True: s
+cgi.parse_header = lambda s: ("text/xml", {})
 sys.modules["cgi"] = cgi
 
-import feedparser
-
-# 🧰 إصلاح مشكلة cgi المفقودة في Python 3.13
-cgi = types.ModuleType("cgi")
-cgi.escape = lambda s, quote=True: s
-sys.modules["cgi"] = cgi
-
+# 📦 مكتبة قراءة RSS
 import feedparser
 
 # 🔑 توكن البوت
