@@ -1,12 +1,17 @@
-import telebot
-import feedparser_ng as feedparser
 import sys
 import types
-sys.modules["cgi"] = types.ModuleType("cgi")
 import time
-import os
+import requests
+import telebot
 from flask import Flask
-from threading import Thread
+import threading
+
+# 🧰 إصلاح مشكلة cgi المفقودة في Python 3.13
+cgi = types.ModuleType("cgi")
+cgi.escape = lambda s, quote=True: s
+sys.modules["cgi"] = cgi
+
+import feedparser
 
 # 🔑 توكن البوت
 TOKEN = "8376936171:AAFxfdp4S4RtyCI9f-ZDUi7vMQTXEuPQUs4"
