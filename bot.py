@@ -106,16 +106,20 @@ def send_news():
         try:
             caption = (
                 f"📰 <b>{n['title']}</b>\n\n"
-                f"🖋️ {n['desc'][:400]}...\n\n"
-                f"🔗 <a href='{n['link']}'>عرض الخبر الكامل</a>\n\n"
-                f"━━━━━━━━━━━━━━\n"
-                f"✨ انضم إلينا لمتابعة أحدث الأخبار الحصرية\n"
+                f"{n['desc'][:400]}...\n\n"
+                f"🔗 <a href='{n['link']}'>عرض الخبر الكامل</a>\n"
+                f"✨ تابع آخر الأخبار أولاً بأول من قناتنا:\n"
                 f"📢 <a href='https://t.me/AkhbarLast'>@AkhbarLast</a>\n"
-                f"━━━━━━━━━━━━━━"
+                f"──────────────────"
             )
 
-            if n["img"]:
-                bot.send_photo(CHAT_ID, n["img"], caption=caption, parse_mode="HTML")
+            # محاولة الإرسال الآمن
+            if n.get("img"):
+                try:
+                    bot.send_photo(CHAT_ID, n["img"], caption=caption, parse_mode="HTML")
+                except Exception as e:
+                    print("⚠️ خطأ أثناء إرسال الصورة:", e)
+                    bot.send_message(CHAT_ID, caption, parse_mode="HTML")
             else:
                 bot.send_message(CHAT_ID, caption, parse_mode="HTML")
 
@@ -124,7 +128,7 @@ def send_news():
             time.sleep(3)
 
         except Exception as e:
-            print("⚠️ خطأ أثناء الإرسال:", e)
+            print("⚠️ خطأ أثناء تجهيز أو إرسال الخبر:", e)
 
     if new_count > 0:
         print(f"✅ تم إرسال {new_count} خبر جديد.")
@@ -166,4 +170,22 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     print(f"🚀 البوت شغال تمام على المنفذ {port}")
     Thread(target=auto_send, daemon=True).start()
+    app.run(host="0.0.0.0", port=port)
+
+# 💤 منع السيرفر من الدخول في وضع النوم (Koyeb)
+def stay_awake():
+    while True:
+        try:
+            requests.get("https://short-cathryn-mahmoudsoliman-dc3c936b.koyeb.app/")
+            print("✅ Ping sent to keep server awake.")
+        except Exception as e:
+            print(f"⚠️ خطأ أثناء محاولة إبقاء السيرفر مستيقظًا: {e}")
+        time.sleep(240)  # كل 4 دقايق (240 ثانية)
+
+# تشغيل الكود في ثريد منفصل
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    print(f"🚀 البوت شغال تمام على المنفذ {port}")
+    Thread(target=auto_send, daemon=True).start()
+    Thread(target=stay_awake, daemon=True).start()
     app.run(host="0.0.0.0", port=port)
