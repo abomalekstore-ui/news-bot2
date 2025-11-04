@@ -1,5 +1,5 @@
 import telebot
-import feedparser
+import feedparser_ng as feedparser
 import sys
 import types
 sys.modules["cgi"] = types.ModuleType("cgi")
