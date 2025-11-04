@@ -180,12 +180,15 @@ def stay_awake():
 
 # 🚀 التشغيل الرئيسي
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 10000))
     print(f"🚀 البوت شغال تمام على المنفذ {port}")
 
-    # تشغيل المهام الجانبية (إرسال الأخبار + منع النوم)
+    # تشغيل المهام الجانبية (الإرسال + إبقاء السيرفر صاحي)
     Thread(target=auto_send, daemon=True).start()
     Thread(target=stay_awake, daemon=True).start()
 
-    # تشغيل السيرفر Flask
-    app.run(host="0.0.0.0", port=port, debug=False)
+    # تشغيل السيرفر Flask (علشان Render يكتشف الـ port)
+    try:
+        app.run(host="0.0.0.0", port=port, debug=False)
+    except Exception as e:
+        print(f"⚠️ خطأ أثناء تشغيل السيرفر: {e}")
