@@ -1,6 +1,6 @@
-# ✅ استيراد المكتبات المطلوبة
 import sys
 import types
+import os
 import time
 import requests
 import telebot
@@ -8,10 +8,20 @@ from flask import Flask
 import threading
 
 # 🩹 إصلاح مكتبة cgi المفقودة في Python 3.13
-# مكتبة feedparser القديمة بتعتمد على دالة parse_header من cgi
-# فبنعمل موديول وهمي بنفس الاسم علشان الكود ما يبوظش
+# مكتبة feedparser القديمة بتستخدم cgi.parse_header وده مش موجود في الإصدارات الحديثة
+def fake_parse_header(value):
+    # نرجع محتوى بسيط زي ما feedparser بيحتاج
+    parts = value.split(";")
+    main_value = parts[0].strip()
+    params = {}
+    for item in parts[1:]:
+        if "=" in item:
+            k, v = item.strip().split("=", 1)
+            params[k.lower()] = v.strip('"')
+    return main_value, params
+
 cgi = types.ModuleType("cgi")
-cgi.parse_header = lambda s: ("text/xml", {})
+cgi.parse_header = fake_parse_header
 sys.modules["cgi"] = cgi
 
 # 📦 مكتبة قراءة RSS
