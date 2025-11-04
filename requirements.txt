@@ -1,4 +1,4 @@
 Flask==2.2.5
-feedparser==6.0.10
+requests==2.32.3
 pyTelegramBotAPI==4.11.0
-requests==2.31.0
+feedparser-ng==1.0.1
